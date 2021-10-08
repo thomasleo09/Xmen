@@ -16,6 +16,8 @@ import java.util.stream.IntStream;
 @Service
 public class DnaAnalysisImpl implements DnaAnalysis {
 
+    public int numberTotalSequences;
+
     @Override
     public boolean isMutant(String[] dna) {
         String[][] dnaMatrix = new String[dna.length][dna.length];
@@ -25,8 +27,13 @@ public class DnaAnalysisImpl implements DnaAnalysis {
                 dnaMatrix[dnaStringIndex][nitrogenousBaseIndex] = dnaArray[nitrogenousBaseIndex];
             });
         });
-        return (getNumberOfSequences(dnaMatrix, Directions.HORIZONTAL) + getNumberOfSequences(dnaMatrix, Directions.VERTICAL)
-                + getNumberOfSequences(dnaMatrix, Directions.OBLIQUE_UP) + getNumberOfSequences(dnaMatrix, Directions.OBLIQUE_DOWN) > 1);
+        numberTotalSequences = getNumberOfSequences(dnaMatrix, Directions.HORIZONTAL) + getNumberOfSequences(dnaMatrix, Directions.VERTICAL)
+                + getNumberOfSequences(dnaMatrix, Directions.OBLIQUE_UP) + getNumberOfSequences(dnaMatrix, Directions.OBLIQUE_DOWN);
+        log.info("Horizontal " + getNumberOfSequences(dnaMatrix, Directions.HORIZONTAL));
+        log.info("Vertical " + getNumberOfSequences(dnaMatrix, Directions.VERTICAL));
+        log.info("Diagonal arriba" + getNumberOfSequences(dnaMatrix, Directions.OBLIQUE_UP));
+        log.info("Diagonal abajo" + getNumberOfSequences(dnaMatrix, Directions.OBLIQUE_DOWN));
+        return numberTotalSequences > 1;
     }
 
     private int getNumberOfSequences(String[][] dnaMatrix, Directions direction) {
