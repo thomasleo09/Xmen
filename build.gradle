@@ -1,51 +1,61 @@
+buildscript {      // Configuration for building
+    repositories {
+        jcenter()      // Bintray's repository - a fast Maven Central mirror & more
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.google.cloud.tools:appengine-gradle-plugin:2.4.2'
+        classpath 'org.akhikhl.gretty:gretty:+'
+    }
+}
+
 plugins {
+    id 'java'
+    id 'war'
     id 'org.springframework.boot' version '2.5.5'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id 'java'
-    id 'jacoco'
+}
+
+repositories {   // repositories for Jar's you access in your code
+    jcenter()
+    mavenCentral()
+}
+
+
+apply plugin: "org.akhikhl.gretty"
+apply plugin: 'com.google.cloud.tools.appengine'
+
+configurations {
+    compile.exclude module: "spring-boot-starter-tomcat"
+    compile.exclude group: 'org.apache.tomcat'
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'junit:junit:4.13.1'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
+    providedCompile 'com.google.cloud.tools:appengine-gradle-plugin:2.4.2'
+
+    compileOnly('org.projectlombok:lombok')
+    annotationProcessor 'org.projectlombok:lombok'
+}
+
+gretty {
+    servletContainer = 'jetty9'  // What App Engine Flexible uses
+}
+
+appengine {
+    deploy {   // deploy configuration
+        projectId = "xmenproject"
+        version = "1a"
+        stopPreviousVersion = true  // default - stop the current version
+        promote = true              // default - & make this the current version
+    }
 }
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter'
-    implementation 'org.projectlombok:lombok:1.18.20'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'junit:junit:4.13.1'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
-    compileOnly('org.projectlombok:lombok')
-    annotationProcessor 'org.projectlombok:lombok'
-
-}
-jacocoTestCoverageVerification {
-    violationRules {
-        rule {
-            limit {
-                minimum = 0.8
-            }
-        }
-    }
-}
-
-test {
-    finalizedBy jacocoTestReport
-}
-jacocoTestReport {
-    dependsOn test
-
-    afterEvaluate {
-        classDirectories.setFrom(files(classDirectories.files.collect {
-            fileTree(dir: it, exclude: [
-                    "**/dto/*",
-                    "**/constant/*"
-            ])
-        }))
-    }
-}
+targetCompatibility = '1.8'

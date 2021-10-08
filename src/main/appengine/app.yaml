@@ -1,0 +1,8 @@
+runtime: java
+env: flex
+manual_scaling:
+  instances: 2
+
+handlers:
+  - url: /.*
+    script: this field is required, but ignored

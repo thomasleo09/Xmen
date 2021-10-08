@@ -3,6 +3,7 @@ package com.example.xmen.service;
 import com.example.xmen.constant.Directions;
 import com.example.xmen.constant.DnaConstants;
 import com.example.xmen.service.api.DnaAnalysis;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.IntStream;
 
-
+@Slf4j
 @Service
 public class DnaAnalysisImpl implements DnaAnalysis {
 
@@ -28,6 +29,10 @@ public class DnaAnalysisImpl implements DnaAnalysis {
         });
         numberTotalSequences = getNumberOfSequences(dnaMatrix, Directions.HORIZONTAL) + getNumberOfSequences(dnaMatrix, Directions.VERTICAL)
                 + getNumberOfSequences(dnaMatrix, Directions.OBLIQUE_UP) + getNumberOfSequences(dnaMatrix, Directions.OBLIQUE_DOWN);
+        log.info("Horizontal " + getNumberOfSequences(dnaMatrix, Directions.HORIZONTAL));
+        log.info("Vertical " + getNumberOfSequences(dnaMatrix, Directions.VERTICAL));
+        log.info("Diagonal arriba " + getNumberOfSequences(dnaMatrix, Directions.OBLIQUE_UP));
+        log.info("Diagonal abajo " + getNumberOfSequences(dnaMatrix, Directions.OBLIQUE_DOWN));
         return numberTotalSequences > 1;
     }
 
