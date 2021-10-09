@@ -1,36 +1,41 @@
 buildscript {      // Configuration for building
+    ext {
+        springBootVersion = '2.5.5'
+    }
     repositories {
         jcenter()      // Bintray's repository - a fast Maven Central mirror & more
         mavenCentral()
     }
     dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
         classpath 'com.google.cloud.tools:appengine-gradle-plugin:2.4.2'
         classpath 'org.akhikhl.gretty:gretty:+'
     }
 }
 
-plugins {
-    id 'java'
-    id 'war'
-    id 'org.springframework.boot' version '2.5.5'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-}
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'war'
+apply plugin: "org.akhikhl.gretty"
+apply plugin: 'com.google.cloud.tools.appengine'
 
 repositories {   // repositories for Jar's you access in your code
     jcenter()
     mavenCentral()
 }
 
-
-apply plugin: "org.akhikhl.gretty"
-apply plugin: 'com.google.cloud.tools.appengine'
-
 configurations {
+    providedRuntime
     compile.exclude module: "spring-boot-starter-tomcat"
     compile.exclude group: 'org.apache.tomcat'
+    compile.exclude module: 'org.apache.tomcat.embed'
+    compile.exclude group: 'org.eclipse.jetty'
+    compile.exclude group: 'org.mortbay.jasper'
 }
 
 dependencies {
+    providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'junit:junit:4.13.1'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

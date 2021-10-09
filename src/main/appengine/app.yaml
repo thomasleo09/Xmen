@@ -6,3 +6,4 @@ manual_scaling:
 handlers:
   - url: /.*
     script: this field is required, but ignored
+
