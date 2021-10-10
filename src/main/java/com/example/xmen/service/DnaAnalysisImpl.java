@@ -29,10 +29,6 @@ public class DnaAnalysisImpl implements DnaAnalysis {
         });
         numberTotalSequences = getNumberOfSequences(dnaMatrix, Directions.HORIZONTAL) + getNumberOfSequences(dnaMatrix, Directions.VERTICAL)
                 + getNumberOfSequences(dnaMatrix, Directions.OBLIQUE_UP) + getNumberOfSequences(dnaMatrix, Directions.OBLIQUE_DOWN);
-        log.info("Horizontal " + getNumberOfSequences(dnaMatrix, Directions.HORIZONTAL));
-        log.info("Vertical " + getNumberOfSequences(dnaMatrix, Directions.VERTICAL));
-        log.info("Diagonal arriba " + getNumberOfSequences(dnaMatrix, Directions.OBLIQUE_UP));
-        log.info("Diagonal abajo " + getNumberOfSequences(dnaMatrix, Directions.OBLIQUE_DOWN));
         return numberTotalSequences > 1;
     }
 
