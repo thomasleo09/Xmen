@@ -23,7 +23,8 @@ public class DnaAnalysisController {
 
     @GetMapping("/")
     public String defaultEndpoint() {
-        return "Hola mundo";
+        return "Xmen dna project - Thomas Herrera";
+
     }
 
     @PostMapping(path = ResourceMapping.GET_DNA_INFORMATION,

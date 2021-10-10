@@ -3,6 +3,7 @@ package com.example.xmen.service;
 import com.example.xmen.constant.Directions;
 import com.example.xmen.constant.DnaConstants;
 import com.example.xmen.service.api.DnaAnalysis;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.IntStream;
 
-
+@Slf4j
 @Service
 public class DnaAnalysisImpl implements DnaAnalysis {
 
