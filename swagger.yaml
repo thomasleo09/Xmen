@@ -1,0 +1,76 @@
+swagger: "2.0"
+info:
+  description: "Spring Boot project for the challenge for Mercado Libre interview, developed by Thomas Herrera"
+  version: "1.0.0"
+  title: "MeLi Challenge"
+  contact:
+    email: "thomasleo09.tlhg@gmail.com"
+ 
+host: "xmenproject.rj.r.appspot.com"
+basePath: "/"
+tags:
+- name: "mutant"
+  description: "Endpoint for the dna analysis to decide if an adn correspon to a mutant or an human"
+- name: "stats"
+  description: "Endpoint for obtain the stats of all the dna that have benn analized for the api and their results"
+schemes:
+- "https"
+- "http"
+paths:
+  /mutant:
+    post:
+      tags:
+      - "mutant"
+      summary: "Analize new strand of dna"
+      description: ""
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Dna string array to be analyzed"
+        required: true
+        schema:
+          $ref: "#/definitions/dna"
+      responses:
+        "200":
+          description: "OK: The dna is of a MUTANT"
+        "403":
+          description: "FORBIDDEN: The dna is of a HUMAN"
+        "400":
+          description: "BAD REQUEST: The request body is wrong, or the dna string doesnt meet the parameters"
+        "500":
+          description: "INTERNAL SERVER ERROR: Internal error"
+  /stats:
+    get:
+      tags:
+      - "stats"
+      summary: "Respond with the statistics of the DNA records analyzed by the api"
+      description: ""
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "OK: The stats were generated right"
+          schema: 
+            $ref: "#/definitions/stats"
+        "500":
+          description: "INTERNAL SERVER ERROR: Internal error"
+definitions:
+  dna:
+    type: "object"
+    required:
+    - "dna"
+    properties:
+      dna:
+        type: "string"
+  stats:
+    type: "object"
+    properties:
+      count_mutant_dna:
+        type: "string"
+      count_human_dna:
+        type: "string"
+      ratio:
+        type: "string"
+        
