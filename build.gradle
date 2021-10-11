@@ -49,15 +49,6 @@ dependencies {
 }
 test {
     finalizedBy jacocoTestReport
-    jacoco {
-        excludes = [
-                "**/dto/*",
-                "**/entity/*",
-                "**/repository/*",
-                "**/constant/*",
-                "**/servlet/*"
-        ]
-    }
 }
 
 jacocoTestCoverageVerification {
@@ -70,6 +61,21 @@ jacocoTestCoverageVerification {
     }
 }
 
+jacocoTestReport {
+    dependsOn test
+
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    "**/dto/*",
+                    "**/entity/*",
+                    "**/repository/*",
+                    "**/constant/*",
+                    "**/servlet/*"
+            ])
+        }))
+    }
+}
 
 appengineDeploy.dependsOn test
 appengineStage.dependsOn test
