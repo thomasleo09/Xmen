@@ -1,9 +1,9 @@
-buildscript {      // Configuration for building
+buildscript {
     ext {
         springBootVersion = '2.5.5'
     }
     repositories {
-        jcenter()      // Bintray's repository - a fast Maven Central mirror & more
+        jcenter()
         mavenCentral()
     }
     dependencies {
@@ -17,6 +17,7 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'war'
 apply plugin: 'com.google.cloud.tools.appengine'
+apply plugin: 'jacoco'
 
 repositories {
     maven {
@@ -28,6 +29,7 @@ repositories {
 
 dependencies {
     implementation 'com.google.appengine:appengine-api-1.0-sdk:+'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
 
     implementation 'jstl:jstl:1.2'
@@ -40,11 +42,35 @@ dependencies {
     testImplementation 'com.google.appengine:appengine-api-stubs:+'
     testImplementation 'com.google.appengine:appengine-tools-sdk:+'
 
+    implementation 'org.springframework.cloud:spring-cloud-gcp-starter-sql-mysql:1.2.3.RELEASE'
+
     compileOnly('org.projectlombok:lombok')
     annotationProcessor 'org.projectlombok:lombok'
 }
+test {
+    finalizedBy jacocoTestReport
+    jacoco {
+        excludes = [
+                "**/dto/*",
+                "**/entity/*",
+                "**/repository/*",
+                "**/constant/*",
+                "**/servlet/*"
+        ]
+    }
+}
 
-// Always run unit tests
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.8
+            }
+        }
+    }
+}
+
+
 appengineDeploy.dependsOn test
 appengineStage.dependsOn test
 

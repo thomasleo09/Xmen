@@ -4,12 +4,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.http.HttpStatus;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Mockito.verify;
-import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DnaAnalysisImplTest {
@@ -18,10 +15,10 @@ public class DnaAnalysisImplTest {
     DnaAnalysisImpl dnaAnalysis;
 
     private final String[] dnaHumanArrayTest = new String[]{"CGAG", "AGGC", "TACT", "GGAA"};
-    private final String[] dnaMutanArrayTest = new String[]{"CGAG","AGGC","TGCT","GGAA"};
-    private final String[] dnaMutanFiveArrayTest = new String[]{"ACTGG","GATCC","TCCTC","CGGAC","GGGGC"};
-    private final String[] dnaMutanSixArrayTest = new String[]{"AAAACT","AGCAGT","AAAATT","AAATCT","ATACCA","TTAAAA"};
-    private final String[] dnaMutanSevenArrayTest = new String[]{"AAGACTA","CATAGTC","AGACTCG","ACAACTA","ATACTAG","TTGTCAC","GGCAGTG"};
+    private final String[] dnaMutanArrayTest = new String[]{"CGAG", "AGGC", "TGCT", "GGAA"};
+    private final String[] dnaMutanFiveArrayTest = new String[]{"ACTGG", "GATCC", "TCCTC", "CGGAC", "GGGGC"};
+    private final String[] dnaMutanSixArrayTest = new String[]{"AAAACT", "AGCAGT", "AAAATT", "AAATCT", "ATACCA", "TTAAAA"};
+    private final String[] dnaMutanSevenArrayTest = new String[]{"AAGACTA", "CATAGTC", "AGACTCG", "ACAACTA", "ATACTAG", "TTGTCAC", "GGCAGTG"};
     private final String[] dnaMutanTenArrayTest = new String[]{"AAAAAAATTT", "CTTACAACGT", "CGTGCATCAT", "CAGATAGAAT", "TCACACTGAG", "GAACTAAAAC", "ACGCCTAGGA", "ACTCGCAGAC", "AGTATTAACC", "ACCCCGATTC"};
 
     @Test
